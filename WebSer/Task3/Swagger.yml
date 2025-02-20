@@ -1,0 +1,40 @@
+openapi: '3.0.3'
+info:
+  title: API Title
+  version: '1.0'
+servers:
+  - url: https://api.server.test/v1
+paths:
+  /test:
+    get:
+      responses:
+        '200':
+          description: OK
+  /example:
+    get:
+      responses:
+        '200':
+          description: OK
+  /getSingleProduct:
+    get:
+      responses:
+        '200':
+          description: Single Prodcuct
+
+  /getAllProd:
+    get:
+      responses:
+        '200':
+          description: All Products
+
+  /insertNewProduct:
+    get:
+      responses:
+        '200':
+          description: New Prodcucts
+
+  /search:
+    get:
+      responses:
+        '200':
+          description: Searching
