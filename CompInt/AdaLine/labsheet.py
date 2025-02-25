@@ -31,7 +31,9 @@ errors=[]
 
 for input_item, desired in zip(INPUTS, OUTPUTS):
 
-    ADALINE_OUTPUT = (input_item[0] * WEIGHTS[0] + input_item[1] * WEIGHTS[1] + input_item[2] * WEIGHTS[2])
+   #ADALINE_OUTPUT = (input_item[0] * WEIGHTS[0] + input_item[1] * WEIGHTS[1] + input_item[2] * WEIGHTS[2])
+   #Simplified Version
+    ADALINE_OUTPUT = np.dot(input_item, WEIGHTS)
     ADALINE_OUTPUT = step(ADALINE_OUTPUT)
 
     ERROR = desired - ADALINE_OUTPUT
