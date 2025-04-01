@@ -28,6 +28,8 @@ class Product(BaseModel):
     Unit_Price: float
     Stock_Quantity: int
     Description: str = None
+    start_id: str
+    end_id: str
 
 
 
@@ -74,8 +76,8 @@ def add_new_product(product: Product):
 
 
 @app.delete("/deleteOne/{product_id}")
-def delete_one(product_id: int):
-    result = collection.delete_one({"id": product_id})
+def delete_one(product: Product):
+    result = collection.delete_one({"id": product.product_id})
     return {"message": "Product deleted"} if result.deleted_count else {"message": "Product not found"}
 
 
@@ -86,16 +88,14 @@ def starts_with(letter: str):
 
 
 @app.get("/paginate/{start_id}/{end_id}")
-def paginate(start_id: str, end_id: str):
-    products = list(collection.find({"Product ID": {"$gte": start_id, "$lte": end_id}}, {"_id": 0}).limit(10))
-    for i, product in enumerate(products):
-        products[i] = product
+def paginate(params: Product):
+    products = list(collection.find({"Product ID": {"$gte": params.start_id, "$lte": params.end_id}}, {"_id": 0}).limit(10))
     return {"products": products}
 
 
 @app.get("/convert/{product_id}")
-def convert_price(product_id: str):
-    product = collection.find_one({"Product ID": product_id}, {"_id": 0})
+def convert_price(product: Product):
+    product = collection.find_one({"Product ID": product.product_id}, {"_id": 0})
     if not product:
         return {"message": "Product not found"}
 
@@ -104,7 +104,7 @@ def convert_price(product_id: str):
     if response.status_code == 200:
         exchange_rate = response.json().get("rates", {}).get("EUR", 1)
         price_in_euro = round(float(product["Unit Price"]) * exchange_rate, 2)
-        return {"product_id": product_id, "price_in_euro": price_in_euro}
+        return {"product_id": product.product_id, "price_in_euro": price_in_euro}
 
     return {"message": "Failed to fetch exchange rate"}
 
