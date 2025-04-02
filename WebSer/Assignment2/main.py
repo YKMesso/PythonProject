@@ -28,8 +28,8 @@ class Product(BaseModel):
     Unit_Price: float
     Stock_Quantity: int
     Description: str = None
-    start_id: str
-    end_id: str
+    start_id: str = None
+    end_id: str = None
 
 
 
@@ -76,8 +76,8 @@ def add_new_product(product: Product):
 
 
 @app.delete("/deleteOne/{product_id}")
-def delete_one(product: Product):
-    result = collection.delete_one({"id": product.product_id})
+def delete_one(product_id: str):
+    result = collection.delete_one({"Product ID": product_id})
     return {"message": "Product deleted"} if result.deleted_count else {"message": "Product not found"}
 
 
