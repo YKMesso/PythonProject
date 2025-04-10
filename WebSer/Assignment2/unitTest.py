@@ -3,7 +3,7 @@ import sys
 import pytest
 from fastapi.testclient import TestClient
 import requests
-inport sys
+import sys
 from fpdf import FPDF
 from main import app  # Ensure 'main' is the name of your FastAPI script
 
