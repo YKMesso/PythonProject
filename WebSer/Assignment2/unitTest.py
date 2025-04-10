@@ -1,6 +1,9 @@
+import sys
+
 import pytest
 from fastapi.testclient import TestClient
 import requests
+inport sys
 from fpdf import FPDF
 from main import app  # Ensure 'main' is the name of your FastAPI script
 
@@ -75,7 +78,12 @@ def generate_pdf():
 
 # Run tests and save results
 if __name__ == "__main__":
-    with open("test_results.txt", "w") as f:
-        pytest.main(["-v"], stdout=f)
+    with open("unit_test_results.txt", "w") as f:
+        # Redirect stdout temporarily
+        sys.stdout = f
+        try:
+            pytest.main(["-v"])
+        finally:
+            sys.stdout = sys.__stdout__
 
     generate_pdf()
